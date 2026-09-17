@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula Conectada - Comunidad Secundaria Activa</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#F0F9FF',
+              100: '#E0F2FE',
+              200: '#BAE6FD',
+              300: '#7DD3FC',
+              400: '#38BDF8',
+              500: '#0284C7',
+              600: '#0369A1',
+              700: '#075985',
+              800: '#0C4A6E',
+            },
+            accent: {
+              50: '#ECFEFF',
+              100: '#CFFAFE',
+              500: '#06B6D4',
+              600: '#0891B2',
+            },
+            surface: {
+              bg: '#F8FAFC',
+              card: '#FFFFFF',
+              border: '#E2E8F0',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #0F172A;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    .badge-tab.active {
+      background-color: #0284C7;
+      color: #FFFFFF;
+      border-color: #0284C7;
+    }
+    .bottom-nav-active {
+      color: #0284C7;
+      font-weight: 700;
+    }
+    .modal-backdrop {
+      background-color: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-100 selection:text-brand-800">
+
+  <!-- TOP APP BAR -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 sm:px-6 shadow-sm">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+        <div class="w-10 h-10 rounded-xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-600 shadow-sm">
+          <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight text-slate-900 leading-none">Aula Conectada</h1>
+          <p class="text-xs font-medium text-slate-500 mt-0.5">Comunidad Secundaria Activa</p>
+        </div>
+      </div>
+
+      <!-- User Profile Action -->
+      <button onclick="openModal('profileModal')" class="flex items-center space-x-2.5 p-1.5 pr-3 rounded-full hover:bg-slate-100 transition border border-slate-200">
+        <div class="w-8 h-8 rounded-full bg-cyan-100 border border-cyan-400 text-cyan-800 font-bold text-xs flex items-center justify-center">
+          CT
+        </div>
+        <div class="hidden sm:block text-left">
+          <p class="text-xs font-bold text-slate-800 leading-tight">Camila Torres</p>
+          <p class="text-[10px] font-medium text-brand-600">4° Año "B"</p>
+        </div>
+        <i data-lucide="user" class="w-4 h-4 text-slate-400"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- DESKTOP / TABLET SUB-HEADER NAV -->
+  <nav class="hidden md:block bg-white border-b border-slate-200 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 flex space-x-1">
+      <button onclick="switchTab('home')" class="nav-desktop-tab px-4 py-3 text-sm font-semibold flex items-center space-x-2 border-b-2 border-brand-500 text-brand-600" data-tab="home">
+        <i data-lucide="home" class="w-4 h-4"></i>
+        <span>Inicio</span>
+      </button>
+      <button onclick="switchTab('safe_space')" class="nav-desktop-tab px-4 py-3 text-sm font-semibold flex items-center space-x-2 border-b-2 border-transparent text-slate-500 hover:text-slate-900" data-tab="safe_space">
+        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+        <span>Espacio Seguro & ESI</span>
+      </button>
+      <button onclick="switchTab('library')" class="nav-desktop-tab px-4 py-3 text-sm font-semibold flex items-center space-x-2 border-b-2 border-transparent text-slate-500 hover:text-slate-900" data-tab="library">
+        <i data-lucide="book-open" class="w-4 h-4"></i>
+        <span>Biblioteca de Apuntes</span>
+      </button>
+      <button onclick="switchTab('teachers')" class="nav-desktop-tab px-4 py-3 text-sm font-semibold flex items-center space-x-2 border-b-2 border-transparent text-slate-500 hover:text-slate-900" data-tab="teachers">
+        <i data-lucide="users" class="w-4 h-4"></i>
+        <span>Directorio de Profesores</span>
+      </button>
+      <button onclick="switchTab('faq_contact')" class="nav-desktop-tab px-4 py-3 text-sm font-semibold flex items-center space-x-2 border-b-2 border-transparent text-slate-500 hover:text-slate-900" data-tab="faq_contact">
+        <i data-lucide="help-circle" class="w-4 h-4"></i>
+        <span>Reglamento & Contacto</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6 w-full flex-grow pb-24 md:pb-12">
+    
+    <!-- ============================================== -->
+    <!-- 1. HOME TAB VIEW -->
+    <!-- ============================================== -->
+    <section id="view-home" class="space-y-6">
+      <!-- Welcome Hero -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+            <span>Ciclo Lectivo 2026 • Turno Mañana</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">¡Hola, Camila!</h2>
+          <p class="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+            Tu punto de encuentro escolar: descargá material para tus materias, enterate de las novedades y accedé a un canal seguro de acompañamiento entre pares.
+          </p>
+        </div>
+        <button onclick="openModal('reportModal')" class="w-full md:w-auto inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-sm shadow-md transition-all shrink-0">
+          <i data-lucide="lock" class="w-4 h-4"></i>
+          <span>Reporte Confidencial</span>
+        </button>
+      </div>
+
+      <!-- Quick Access Grid -->
+      <div>
+        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center space-x-2">
+          <i data-lucide="compass" class="w-4 h-4 text-brand-600"></i>
+          <span>Accesos Rápidos</span>
+        </h3>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Safe Space -->
+          <div onclick="switchTab('safe_space')" class="cursor-pointer group bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-sky-50 text-brand-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <i data-lucide="shield" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm group-hover:text-brand-600 transition-colors">Espacio Seguro</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Protocolo Bullying & ESI</p>
+            </div>
+          </div>
+          <!-- Library -->
+          <div onclick="switchTab('library')" class="cursor-pointer group bg-white p-4 rounded-2xl border border-slate-200 hover:border-accent-500 hover:shadow-md transition-all flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <i data-lucide="book-open-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm group-hover:text-cyan-600 transition-colors">Biblioteca</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Apuntes & Exámenes</p>
+            </div>
+          </div>
+          <!-- Teachers -->
+          <div onclick="switchTab('teachers')" class="cursor-pointer group bg-white p-4 rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <i data-lucide="users" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm group-hover:text-indigo-600 transition-colors">Profesores</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Horarios de Consulta</p>
+            </div>
+          </div>
+          <!-- Institutional FAQ -->
+          <div onclick="switchTab('faq_contact')" class="cursor-pointer group bg-white p-4 rounded-2xl border border-slate-200 hover:border-amber-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-question" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm group-hover:text-amber-600 transition-colors">Trámites & FAQ</h4>
+              <p class="text-xs text-slate-500 mt-0.5">Faltas, Preceptoría y Docs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcements Feed -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="megaphone" class="w-4 h-4 text-brand-600"></i>
+            <span>Novedades & Cartelera Escolar</span>
+          </h3>
+          <span class="text-xs text-slate-500">Actualizado hoy</span>
+        </div>
+
+        <div id="announcements-container" class="space-y-3.5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. SAFE SPACE & ESI TAB VIEW -->
+    <!-- ============================================== -->
+    <section id="view-safe_space" class="hidden space-y-6">
+      <!-- Safe Space Header Card -->
+      <div class="bg-gradient-to-r from-sky-50 via-white to-cyan-50 rounded-2xl border border-sky-100 p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="p-1.5 bg-brand-500 text-white rounded-lg">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </span>
+              <h2 class="text-xl font-bold text-slate-900">Espacio Seguro & Convivencia</h2>
+            </div>
+            <p class="text-sm text-slate-600 mt-1 max-w-xl">
+              Prevención contra el acoso escolar, acceso a derechos, educación sexual integral (ESI) y asistencia personalizada del Gabinete de Orientación.
+            </p>
+          </div>
+          <button onclick="openModal('reportModal')" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-semibold text-sm shadow transition">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+            <span>Enviar Reporte al Gabinete</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Safe Space Sub-Tabs -->
+      <div class="flex border-b border-slate-200 overflow-x-auto space-x-4">
+        <button onclick="setSafeSubTab('protocol')" id="btn-sub-protocol" class="pb-3 text-sm font-semibold border-b-2 border-brand-500 text-brand-600 flex items-center space-x-2">
+          <i data-lucide="list-ordered" class="w-4 h-4"></i>
+          <span>Protocolo de Actuación</span>
+        </button>
+        <button onclick="setSafeSubTab('esi')" id="btn-sub-esi" class="pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center space-x-2">
+          <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+          <span>Módulos ESI (Ley 26.150)</span>
+        </button>
+        <button onclick="setSafeSubTab('faq')" id="btn-sub-faq" class="pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center space-x-2">
+          <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <span>Consultas & Derechos</span>
+        </button>
+      </div>
+
+      <!-- Sub-view 1: Protocol -->
+      <div id="safe-sub-protocol" class="space-y-4">
+        <div class="p-4 bg-sky-50 border border-sky-200 rounded-xl text-xs text-sky-900 flex items-center space-x-3">
+          <i data-lucide="info" class="w-5 h-5 text-sky-600 shrink-0"></i>
+          <span>Si vos o un compañero/a están sufriendo hostigamiento, exclusión reiterada o ciberacoso, estos son los pasos formales y seguros para actuar.</span>
+        </div>
+        <div id="protocol-steps-container" class="space-y-4">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Hotlines -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 mt-6">
+          <h4 class="font-bold text-slate-900 text-sm mb-3 flex items-center space-x-2">
+            <i data-lucide="phone-call" class="w-4 h-4 text-brand-600"></i>
+            <span>Líneas Telefónicas Gratuitas y Nacionales (24 hs)</span>
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-lg font-black text-brand-600">102</div>
+              <div class="font-semibold text-xs text-slate-800">Línea 102</div>
+              <p class="text-[11px] text-slate-500 mt-1">Protección y derechos de niñas, niños y adolescentes.</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-lg font-black text-rose-600">144</div>
+              <div class="font-semibold text-xs text-slate-800">Línea 144</div>
+              <p class="text-[11px] text-slate-500 mt-1">Atención y contención en situaciones de violencia de género.</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-lg font-black text-emerald-600">135</div>
+              <div class="font-semibold text-xs text-slate-800">Línea 135</div>
+              <p class="text-[11px] text-slate-500 mt-1">Centro de Asistencia y Salud Emocional en Crisis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 2: ESI Modules -->
+      <div id="safe-sub-esi" class="hidden space-y-4">
+        <div class="p-4 bg-cyan-50 border border-cyan-200 rounded-xl text-xs text-cyan-900 flex items-center space-x-3">
+          <i data-lucide="sparkles" class="w-5 h-5 text-cyan-600 shrink-0"></i>
+          <span>La Educación Sexual Integral es tu derecho. Explorá información con rigor científico, respeto y perspectiva de derechos.</span>
+        </div>
+        <div id="esi-container" class="space-y-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Sub-view 3: Safe FAQ -->
+      <div id="safe-sub-faq" class="hidden space-y-4">
+        <!-- Search & Filter Tags -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-grow">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input type="text" id="safe-faq-search" oninput="renderSafeFaq()" placeholder="Buscar dudas sobre convivencia o derechos..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-500">
+          </div>
+          <div class="flex items-center space-x-2 overflow-x-auto pb-1" id="safe-faq-tags">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+        <div id="safe-faq-container" class="space-y-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. DIGITAL LIBRARY TAB VIEW -->
+    <!-- ============================================== -->
+    <section id="view-library" class="hidden space-y-6">
+      <!-- Library Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="book-marked" class="w-5 h-5 text-brand-600"></i>
+            <span>Biblioteca Comunitaria de Apuntes</span>
+          </h2>
+          <p class="text-sm text-slate-600 mt-0.5">Resúmenes, modelos de parciales y guías resueltas compartidas por estudiantes.</p>
+        </div>
+        <button onclick="openModal('uploadResourceModal')" class="inline-flex items-center justify-center space-x-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-semibold shadow transition">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>Subir Apunte</span>
+        </button>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-sm">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+          <input type="text" id="library-search" oninput="renderLibrary()" placeholder="Buscar por tema (ej: funciones, revolución, células)..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-500">
+        </div>
+        
+        <!-- Filter Rows -->
+        <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600">
+          <div class="flex items-center space-x-1.5 overflow-x-auto py-1">
+            <span class="text-slate-400">Año:</span>
+            <div id="year-filters" class="flex space-x-1">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-1.5 overflow-x-auto py-1">
+            <span class="text-slate-400">Materia:</span>
+            <div id="subject-filters" class="flex space-x-1">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource List -->
+      <div id="resources-container" class="space-y-3.5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. TEACHERS DIRECTORY TAB VIEW -->
+    <!-- ============================================== -->
+    <section id="view-teachers" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-brand-600"></i>
+            <span>Directorio de Profesores</span>
+          </h2>
+          <p class="text-sm text-slate-600 mt-0.5">Horarios de consulta para dudas, criterios de evaluación y pautas de cursada.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-3 shadow-sm">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+          <input type="text" id="teacher-search" oninput="renderTeachers()" placeholder="Buscar profesor, materia o curso..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-500">
+        </div>
+        <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 text-xs" id="teacher-subject-filters">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Teachers List -->
+      <div id="teachers-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 5. FAQ & CONTACT TAB VIEW -->
+    <!-- ============================================== -->
+    <section id="view-faq_contact" class="hidden space-y-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+          <i data-lucide="help-circle" class="w-5 h-5 text-brand-600"></i>
+          <span>Reglamento Escolar & Directorio Institucional</span>
+        </h2>
+        <p class="text-sm text-slate-600 mt-0.5">Régimen de asistencias, pedidos de constancias y vías de contacto con secretaría y gabinete.</p>
+      </div>
+
+      <!-- Tab Switcher (FAQ vs Contacts) -->
+      <div class="flex border-b border-slate-200 space-x-6">
+        <button onclick="setFaqContactSubTab('faqs')" id="btn-sub-school-faq" class="pb-3 text-sm font-semibold border-b-2 border-brand-500 text-brand-600">
+          Preguntas Frecuentes & Normativa
+        </button>
+        <button onclick="setFaqContactSubTab('contacts')" id="btn-sub-school-contacts" class="pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+          Directorio de Áreas y Contactos
+        </button>
+      </div>
+
+      <!-- Sub: School FAQs -->
+      <div id="sub-school-faqs" class="space-y-4">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-grow">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input type="text" id="school-faq-search" oninput="renderSchoolFaq()" placeholder="Buscar sobre faltas, justificaciones o certificados..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-500">
+          </div>
+          <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 text-xs" id="school-faq-categories">
+            <!-- Categories rendered by JS -->
+          </div>
+        </div>
+        <div id="school-faq-container" class="space-y-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Sub: Institutional Contacts -->
+      <div id="sub-school-contacts" class="hidden space-y-4">
+        <div id="contacts-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAVIGATION (MOBILE ONLY) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 flex justify-around shadow-lg">
+    <button onclick="switchTab('home')" class="bottom-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 text-[10px] font-medium transition" data-tab="home">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="mt-1">Inicio</span>
+    </button>
+    <button onclick="switchTab('safe_space')" class="bottom-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 text-[10px] font-medium transition" data-tab="safe_space">
+      <i data-lucide="shield" class="w-5 h-5"></i>
+      <span class="mt-1">Seguro</span>
+    </button>
+    <button onclick="switchTab('library')" class="bottom-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 text-[10px] font-medium transition" data-tab="library">
+      <i data-lucide="book-open" class="w-5 h-5"></i>
+      <span class="mt-1">Biblioteca</span>
+    </button>
+    <button onclick="switchTab('teachers')" class="bottom-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 text-[10px] font-medium transition" data-tab="teachers">
+      <i data-lucide="users" class="w-5 h-5"></i>
+      <span class="mt-1">Profes</span>
+    </button>
+    <button onclick="switchTab('faq_contact')" class="bottom-nav-btn flex flex-col items-center py-1 px-2 text-slate-500 text-[10px] font-medium transition" data-tab="faq_contact">
+      <i data-lucide="help-circle" class="w-5 h-5"></i>
+      <span class="mt-1">Contacto</span>
+    </button>
+  </nav>
+
+  <!-- ============================================== -->
+  <!-- MODALS -->
+  <!-- ============================================== -->
+
+  <!-- 1. Confidential Report Modal -->
+  <div id="reportModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-rose-50/50">
+        <div class="flex items-center space-x-2.5 text-rose-700">
+          <div class="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">Reporte Confidencial al Gabinete</h3>
+            <p class="text-[11px] text-slate-500">Canal protegido y con reserva profesional</p>
+          </div>
+        </div>
+        <button onclick="closeModal('reportModal')" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-start space-x-2.5">
+          <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+          <p>Tu mensaje es recibido exclusivamente por el equipo de psicólogos y psicopedagogos del colegio. Nadie más de la comunidad tendrá acceso.</p>
+        </div>
+
+        <!-- Anonymous Toggle -->
+        <div class="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-white">
+          <div>
+            <span class="text-xs font-bold text-slate-800">Modo Anónimo</span>
+            <p class="text-[11px] text-slate-500">No se adjuntarán tus datos ni tu usuario</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="report-anonymous" onchange="toggleContactInput()" checked class="sr-only peer">
+            <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-600"></div>
+          </label>
+        </div>
+
+        <!-- Contact Info (if not anonymous) -->
+        <div id="contact-info-field" class="hidden space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Tu nombre o teléfono de contacto:</label>
+          <input type="text" id="report-contact" placeholder="Ej: Camila Torres - 11-4567-8900" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-rose-500">
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Año y División relacionada:</label>
+          <input type="text" id="report-grade" value="4° Año B" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-rose-500">
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Tipo de situación:</label>
+          <select id="report-type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-rose-500 bg-white">
+            <option>Acoso / Hostigamiento escolar</option>
+            <option>Ciberacoso en redes sociales</option>
+            <option>Situación familiar o vulnerabilidad</option>
+            <option>Vulneración de derechos / Discriminación</option>
+            <option>Acompañamiento psicopedagógico</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Nivel de urgencia estimado:</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 text-xs font-semibold cursor-pointer hover:bg-slate-50 peer-checked:bg-rose-50">
+              <input type="radio" name="urgency" value="Baja" class="mr-1.5 text-rose-600"> Baja
+            </label>
+            <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 text-xs font-semibold cursor-pointer hover:bg-slate-50 peer-checked:bg-rose-50">
+              <input type="radio" name="urgency" value="Media" checked class="mr-1.5 text-rose-600"> Media
+            </label>
+            <label class="flex items-center justify-center p-2 rounded-xl border border-slate-200 text-xs font-semibold cursor-pointer hover:bg-slate-50 peer-checked:bg-rose-50">
+              <input type="radio" name="urgency" value="Urgente" class="mr-1.5 text-rose-600"> Urgente
+            </label>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Relato de la situación:</label>
+          <textarea id="report-message" rows="4" placeholder="Contanos qué ocurrió, cuándo, o en qué necesitás apoyo del equipo..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-rose-500"></textarea>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-end space-x-3">
+        <button onclick="closeModal('reportModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800">Cancelar</button>
+        <button onclick="submitConfidentialReport()" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow transition">Enviar Reporte Discreto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Upload Study Resource Modal -->
+  <div id="uploadResourceModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <div class="flex items-center space-x-2 text-brand-700">
+          <div class="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center">
+            <i data-lucide="cloud-upload" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">Subir Recurso de Estudio</h3>
+            <p class="text-[11px] text-slate-500">Compartí tu resumen con los demás cursos</p>
+          </div>
+        </div>
+        <button onclick="closeModal('uploadResourceModal')" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar">
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Título del Apunte:</label>
+          <input type="text" id="upload-title" placeholder="Ej: Resumen Trigonometría y Teorema del Seno" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-700">Materia:</label>
+            <select id="upload-subject" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 bg-white">
+              <option>Matemática</option>
+              <option>Historia</option>
+              <option>Filosofía</option>
+              <option>Inglés</option>
+              <option>Biología</option>
+              <option>Lengua y Literatura</option>
+              <option>Física</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-700">Año / Curso:</label>
+            <select id="upload-year" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 bg-white">
+              <option>1° Año</option>
+              <option>2° Año</option>
+              <option>3° Año</option>
+              <option selected>4° Año</option>
+              <option>5° Año</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Tipo de Contenido:</label>
+          <select id="upload-type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 bg-white">
+            <option>Resumen</option>
+            <option>Modelo de Examen</option>
+            <option>Guía de Ejercicios</option>
+            <option>Apuntes de Clase</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700">Descripción breve:</label>
+          <textarea id="upload-desc" rows="3" placeholder="Fórmulas explicadas, cuadros sinópticos, ejemplos resueltos..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl flex items-center justify-between text-xs text-slate-600">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="file-text" class="w-4 h-4 text-brand-600"></i>
+            <span id="upload-filename">archivo_resumen_estudiantil.pdf</span>
+          </div>
+          <button type="button" onclick="randomizeFilename()" class="text-brand-600 hover:text-brand-800 font-semibold">Cambiar</button>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-end space-x-3">
+        <button onclick="closeModal('uploadResourceModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800">Cancelar</button>
+        <button onclick="submitUploadResource()" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow transition">Publicar en Biblioteca</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Teacher Detail Modal -->
+  <div id="teacherModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center space-x-3">
+          <div id="tmodal-avatar" class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-sm border border-brand-200"></div>
+          <div>
+            <h3 id="tmodal-name" class="font-bold text-slate-900 text-base"></h3>
+            <p id="tmodal-courses" class="text-xs text-brand-600 font-semibold"></p>
+          </div>
+        </div>
+        <button onclick="closeModal('teacherModal')" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar text-sm text-slate-700">
+        <div class="p-3 bg-brand-50 rounded-xl border border-brand-100 space-y-1">
+          <div class="text-xs font-bold text-brand-800 flex items-center space-x-1.5">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Horarios y Espacio de Consulta:</span>
+          </div>
+          <p id="tmodal-hours" class="text-xs font-semibold text-brand-900"></p>
+          <p id="tmodal-classroom" class="text-[11px] text-brand-700"></p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+            <span>Criterios de Evaluación:</span>
+          </h4>
+          <ul id="tmodal-criteria" class="space-y-1.5 text-xs text-slate-600 list-disc list-inside"></ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
+            <i data-lucide="file-check" class="w-4 h-4 text-brand-600"></i>
+            <span>Pautas de Entrega de Trabajos:</span>
+          </h4>
+          <ul id="tmodal-rules" class="space-y-1.5 text-xs text-slate-600 list-disc list-inside"></ul>
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
+          <div class="text-xs font-bold text-amber-800 flex items-center space-x-1.5">
+            <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+            <span>Aviso Reciente de la Cátedra:</span>
+          </div>
+          <p id="tmodal-update" class="text-xs text-amber-900"></p>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+        <button onclick="closeModal('teacherModal')" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800">Cerrar</button>
+        <a id="tmodal-email-btn" href="#" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow">
+          <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+          <span>Enviar Correo Institucional</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Announcement Detail Modal -->
+  <div id="announcementModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span id="amodal-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700"></span>
+          <span id="amodal-date" class="text-xs text-slate-400"></span>
+        </div>
+        <button onclick="closeModal('announcementModal')" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar">
+        <h3 id="amodal-title" class="text-lg font-bold text-slate-900"></h3>
+        <p id="amodal-details" class="text-sm text-slate-600 leading-relaxed"></p>
+
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5 text-xs text-slate-600">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600"></i>
+            <span id="amodal-location" class="font-medium text-slate-800"></span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i data-lucide="users" class="w-3.5 h-3.5 text-cyan-600"></i>
+            <span id="amodal-organizer"></span>
+          </div>
+        </div>
+      </div>
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex justify-end">
+        <button onclick="closeModal('announcementModal')" class="px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-semibold">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Profile Modal -->
+  <div id="profileModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="p-6 text-center space-y-3">
+        <div class="w-16 h-16 rounded-full bg-cyan-100 border-2 border-brand-500 text-cyan-800 font-black text-xl flex items-center justify-center mx-auto">
+          CT
+        </div>
+        <div>
+          <h3 class="font-bold text-slate-900 text-base">Camila Torres</h3>
+          <p class="text-xs text-brand-600 font-semibold">4° Año "B" • Ciclo Orientado</p>
+        </div>
+        <div class="text-left bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-600">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Colegio:</span>
+            <span class="font-semibold text-slate-800">Colegio Secundario N° 12</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Legajo:</span>
+            <span class="font-semibold text-slate-800">SEC-2026-4412</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Condición:</span>
+            <span class="font-semibold text-emerald-600">Estudiante Regular</span>
+          </div>
+        </div>
+      </div>
+      <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex justify-end">
+        <button onclick="closeModal('profileModal')" class="w-full py-2 bg-slate-800 text-white rounded-xl text-xs font-semibold">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="fixed top-5 right-5 z-50 transition-all duration-300 transform translate-y-[-100px] opacity-0 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center space-x-3 text-xs">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+      <span id="toast-text">Acción completada</span>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT STATE & LOGIC -->
+  <script>
+    // DATA STORE
+    const AppData = {
+      activeTab: 'home',
+      activeSafeSubTab: 'protocol',
+      activeFaqContactSubTab: 'faqs',
+      selectedYearFilter: 'Todos',
+      selectedSubjectFilter: 'Todas',
+      selectedSafeFaqTag: null,
+      selectedSchoolFaqCat: 'Todos',
+      selectedTeacherSubjFilter: 'Todas',
+
+      announcements: [
+        {
+          id: "a-1",
+          title: "Cronograma de Exámenes Parciales y Recuperatorios",
+          date: "18 de Mayo, 2026",
+          category: "Exámenes",
+          summary: "Se publicaron las fechas de mesas evaluadoras para todas las materias de 1° a 5° año.",
+          fullDetails: "La secretaría académica confirmó que las mesas de recuperación de previas y regulares comenzarán el próximo lunes. Es obligatorio concurrir con DNI, uniforme o vestimenta escolar reglamentaria y libreta de calificaciones actualizada.",
+          location: "Secretaría y Aulas 1 a 6",
+          organizer: "Regencia de Estudios",
+          isImportant: true
+        },
+        {
+          id: "a-2",
+          title: "Buffet Solidario: Viaje de Egresados 5° Año",
+          date: "20 de Mayo, 2026",
+          category: "Solidaridad",
+          summary: "Venta de empanadas y tortas en ambos recreos para recaudar fondos de la promoción.",
+          fullDetails: "Los alumnos de 5° invitan a toda la comunidad escolar al buffet solidario. Habrá opciones vegetarianas y libres de gluten. Todo lo recaudado se destinará al fondo común de fin de ciclo.",
+          location: "Patio Central Techado",
+          organizer: "Centro de Estudiantes",
+          isImportant: false
+        },
+        {
+          id: "a-3",
+          title: "Taller Intercolegial: Convivencia y Vínculos Digitales",
+          date: "24 de Mayo, 2026",
+          category: "Eventos",
+          summary: "Encuentro de debate participativo sobre redes sociales, huella digital y ciberacoso.",
+          fullDetails: "Jornada dictada por facilitadores de educación y derechos digitales. Se trabajará en mesas redondas con casos reales sobre prevención de difusión no consentida y cuidado de la privacidad.",
+          location: "Salón de Actos",
+          organizer: "Gabinete de Orientación",
+          isImportant: true
+        }
+      ],
+
+      protocolSteps: [
+        {
+          stepNumber: 1,
+          title: "Identificación y Registro",
+          subtitle: "Detección temprana y resguardo de evidencia",
+          description: "Reconocer conductas reiteradas de burla, exclusión, agresión física o ciberacoso. Si ocurre en entornos digitales, no responder la agresión y guardar capturas de pantalla fechadas.",
+          keyActions: [
+            "Guardar capturas con fecha, hora y perfiles involucrados",
+            "No responder insultos ni viralizar agresiones en chats grupales",
+            "Conversar con un compañero de confianza"
+          ],
+          warningNote: "Importante: No borrar los chats o publicaciones de agresión antes de mostrarlos al equipo escolar."
+        },
+        {
+          stepNumber: 2,
+          title: "Comunicación al Gabinete o Preceptoría",
+          subtitle: "Canal seguro y confidencial",
+          description: "Acudir al Gabinete de Orientación Escolar, a tu preceptor o utilizar el formulario confidencial de esta app. Podés hacerlo de forma anónima o acompañado.",
+          keyActions: [
+            "Informar lo sucedido con la mayor claridad posible",
+            "Solicitar un espacio privado de diálogo si sentís angustia",
+            "Involucrar a un adulto de referencia en quien confíes"
+          ],
+          warningNote: null
+        },
+        {
+          stepNumber: 3,
+          title: "Intervención Cuidada sin Exposición",
+          subtitle: "Garantía de reserva profesional",
+          description: "El equipo institucional aborda la situación sin exponer a quien dio aviso. Se mantienen entrevistas individuales y acuerdos de convivencia respetuosos.",
+          keyActions: [
+            "Se protegen los datos del denunciante y los involucrados",
+            "No se realizan careos forzados entre las partes",
+            "Se aplican las normas de los Acuerdos Escolares de Convivencia"
+          ],
+          warningNote: null
+        },
+        {
+          stepNumber: 4,
+          title: "Seguimiento y Acompañamiento",
+          subtitle: "Restablecimiento de la tranquilidad en el aula",
+          description: "Evaluación periódica del clima escolar y acompañamiento emocional para que todas y todos puedan estudiar con calma y respeto.",
+          keyActions: [
+            "Reuniones breves de chequeo semanal",
+            "Trabajo pedagógico grupal sobre empatía y cuidado mutuo",
+            "Espacio siempre abierto para reabrir el caso si persisten molestias"
+          ],
+          warningNote: null
+        }
+      ],
+
+      esiTopics: [
+        {
+          id: "esi-1",
+          title: "Vínculos Cuidados, Límites y Consentimiento",
+          subtitle: "Eje: Valorar la afectividad",
+          summary: "El consentimiento debe ser siempre libre, informado, reversible y entusiasta. Los límites personales son inviolables.",
+          keyPoints: [
+            "Un 'sí' forzado, bajo presión o manipulación emocional no es consentimiento real.",
+            "Nadie tiene derecho a exigir fotos íntimas, contraseñas o ubicación en tiempo real.",
+            "Decir 'no' o cambiar de opinión en cualquier momento es un derecho legítimo."
+          ],
+          legalReference: "Ley Nacional 26.150 de Educación Sexual Integral"
+        },
+        {
+          id: "esi-2",
+          title: "Identidad, Diversidad y No Discriminación",
+          subtitle: "Eje: Respetar la diversidad",
+          summary: "Todas las personas tienen derecho a ser tratadas según su identidad de género y orientación con dignidad y sin burlas.",
+          keyPoints: [
+            "Derecho al trato digno y respeto del nombre adoptado en listas y certificados escolares.",
+            "Rechazo absoluto a apodos despectivos y chistes basados en orientación o aspecto.",
+            "Espacios seguros e inclusivos para toda la comunidad escolar."
+          ],
+          legalReference: "Ley Nacional 26.743 de Identidad de Género"
+        },
+        {
+          id: "esi-3",
+          title: "Cuidado del Cuerpo, Salud y Prevención",
+          subtitle: "Eje: Cuidar el cuerpo y la salud",
+          summary: "Información médica y preventiva sobre anticoncepción, infecciones de transmisión (ITS) y métodos de barrera.",
+          keyPoints: [
+            "El preservativo es el único método de doble protección: previene ITS y embarazos no planificados.",
+            "Acceso gratuito a preservativos e insumos de salud en hospitales y centros de salud (salitas).",
+            "Asesoramiento confidencial y autónomo a partir de los 13 años según el Código Civil y Comercial."
+          ],
+          legalReference: "Ley 25.673 de Salud Sexual y Procreación Responsable"
+        },
+        {
+          id: "esi-4",
+          title: "Violencia Digital y Difusión No Consentida",
+          subtitle: "Eje: Ejercer nuestros derechos",
+          summary: "La difusión de imágenes íntimas sin autorización es una vulneración grave sancionada legalmente.",
+          keyPoints: [
+            "Compartir, reenviar o almacenar material íntimo sin permiso expreso constituye violencia digital.",
+            "Si alguien te presiona para enviar imágenes o te extorsiona con publicarlas, acudí de inmediato a adultos.",
+            "El silencio cómplice en grupos de WhatsApp reproduce el daño: frená la cadena de reenvíos."
+          ],
+          legalReference: "Ley 27.590 (Plan Nacional 'Grooming' y Protección en Entornos Digitales)"
+        }
+      ],
+
+      safeSpaceFaqs: [
+        {
+          id: "sf-1",
+          question: "¿Qué hago si veo que excluyen o insultan a alguien en el grupo de WhatsApp del curso?",
+          answer: "No apoyes las burlas ni te quedes en silencio. Podés hablar en privado con la persona afectada para ofrecerle apoyo y avisar al preceptor o al Gabinete de Orientación.",
+          tags: ["#Acoso", "#Convivencia"]
+        },
+        {
+          id: "sf-2",
+          question: "¿Puedo consultar con el Gabinete sin que se enteren mis compañeros?",
+          answer: "Sí, absolutamente. El Gabinete de Orientación Escolar atiende con estricta reserva y secreto profesional. Ningún compañero será informado.",
+          tags: ["#SaludMental", "#Derechos"]
+        },
+        {
+          id: "sf-3",
+          question: "¿Tengo derecho a recibir clases y talleres de ESI en todas las materias?",
+          answer: "Sí. La Ley 26.150 garantiza que la ESI sea transversal y forme parte del contenido pedagógico regular de la secundaria.",
+          tags: ["#ESI", "#Derechos"]
+        },
+        {
+          id: "sf-4",
+          question: "¿Qué puedo hacer si siento ansiedad extrema antes de rendir un examen?",
+          answer: "Acercate a tu preceptor/a o al Gabinete. Tienen herramientas para ayudarte a respirar, organizar un plan de estudio y dialogar con los docentes para acordar instancias más calmas.",
+          tags: ["#SaludMental"]
+        }
+      ],
+
+      resources: [
+        {
+          id: "res-1",
+          title: "Resumen Funciones Trigonométricas y Teorema del Seno",
+          subject: "Matemática",
+          gradeYear: "4° Año",
+          resourceType: "Resumen",
+          description: "Cuadro completo de razones trigonométricas, identidades fundamentales y 12 ejercicios resueltos paso a paso.",
+          contributor: "Lucía Rossi (4° B)",
+          uploadDate: "Hace 2 días",
+          fileType: "PDF",
+          fileSize: "2.4 MB",
+          rating: 4.9,
+          ratingCount: 18,
+          isFavorite: true
+        },
+        {
+          id: "res-2",
+          title: "Modelo de Parcial: Revolución Industrial e Imperialismo",
+          subject: "Historia",
+          gradeYear: "3° Año",
+          resourceType: "Modelo de Examen",
+          description: "Preguntas tipo de mesa evaluadora con pautas de respuesta cronológica y mapa conceptual.",
+          contributor: "Tomás Giménez (4° A)",
+          uploadDate: "Hace 5 días",
+          fileType: "DOCX",
+          fileSize: "1.1 MB",
+          rating: 4.7,
+          ratingCount: 12,
+          isFavorite: false
+        },
+        {
+          id: "res-3",
+          title: "Síntesis Ética Aristotélica vs Utilitarismo de Mill",
+          subject: "Filosofía",
+          gradeYear: "5° Año",
+          resourceType: "Resumen",
+          description: "Comparativa clara para el examen trimestral con citas explicadas y definiciones clave.",
+          contributor: "Mateo Benítez (5° B)",
+          uploadDate: "Hace 1 semana",
+          fileType: "PDF",
+          fileSize: "850 KB",
+          rating: 5.0,
+          ratingCount: 22,
+          isFavorite: true
+        },
+        {
+          id: "res-4",
+          title: "Guía Resuelta: Condicionales Zero, First, Second & Third",
+          subject: "Inglés",
+          gradeYear: "4° Año",
+          resourceType: "Guía de Ejercicios",
+          description: "Estructuras gramaticales, errores típicos y 30 ejercicios con soluciones comentadas.",
+          contributor: "Camila Torres (4° B)",
+          uploadDate: "Ayer",
+          fileType: "PDF",
+          fileSize: "1.8 MB",
+          rating: 4.8,
+          ratingCount: 15,
+          isFavorite: false
+        }
+      ],
+
+      teachers: [
+        {
+          id: "t-1",
+          name: "Prof. Alejandro Romero",
+          title: "Docente de Matemática y Álgebra",
+          subjects: ["Matemática", "Física"],
+          courses: "3° Año A y B, 4° Año B",
+          consultationHours: "Martes 10:30 a 12:00 hs y Jueves 14:00 a 15:30 hs",
+          classroom: "Sala de Profesores / Aula 4",
+          email: "alejandro.romero@colegio.edu.ar",
+          evaluationCriteria: [
+            "Evaluaciones escritas individuales: 60%",
+            "Trabajos prácticos grupales en clase: 25%",
+            "Participación, carpeta completa y cumplimiento: 15%"
+          ],
+          assignmentRules: [
+            "Entrega impresa o manuscrita prolija con carátula oficial.",
+            "Descuento de 1 punto por día de retraso injustificado.",
+            "Posibilidad de rehacer ejercicios desaprobados en semana de consulta."
+          ],
+          recentUpdate: "Se postergó la fecha del TP de Geometría Analítica al próximo viernes por el feriado escolar."
+        },
+        {
+          id: "t-2",
+          name: "Prof. Mariana Varela",
+          title: "Docente de Historia y Ciencias Sociales",
+          subjects: ["Historia"],
+          courses: "2° Año A, 4° Año A y B",
+          consultationHours: "Lunes 11:15 a 12:45 hs",
+          classroom: "Biblioteca Escolar",
+          email: "mariana.varela@colegio.edu.ar",
+          evaluationCriteria: [
+            "Defensas orales y debates en clase: 40%",
+            "Parciales de análisis de fuentes históricas: 40%",
+            "Lectura del material bibliográfico asignado: 20%"
+          ],
+          assignmentRules: [
+            "Formato digital en PDF al correo antes de las 23:59 del día fijado.",
+            "Citas bibliográficas obligatorias en formato APA simplificado."
+          ],
+          recentUpdate: "Ya están subidas las guías de fuentes para el período 1880-1916 en la biblioteca comunitaria."
+        },
+        {
+          id: "t-3",
+          name: "Prof. Gabriel Castro",
+          title: "Docente de Filosofía y Formación Ética",
+          subjects: ["Filosofía"],
+          courses: "5° Año A y B",
+          consultationHours: "Miércoles 13:30 a 15:00 hs",
+          classroom: "Aula 9",
+          email: "gabriel.castro@colegio.edu.ar",
+          evaluationCriteria: [
+            "Ensayos filosóficos argumentativos: 50%",
+            "Coloquios de debate: 30%",
+            "Glosario conceptual: 20%"
+          ],
+          assignmentRules: [
+            "Mínimo 2 páginas, letra Times New Roman o Arial 11.",
+            "Enfoque en la justificación lógica más que en la memoria."
+          ],
+          recentUpdate: "Tema del coloquio de la semana que viene: Dilemas bioéticos contemporáneos."
+        },
+        {
+          id: "t-4",
+          name: "Prof. Silvina Méndez",
+          title: "Docente de Lengua y Literatura",
+          subjects: ["Lengua y Literatura"],
+          courses: "1° Año B, 3° Año A, 4° Año B",
+          consultationHours: "Viernes 09:00 a 10:30 hs",
+          classroom: "Sala Multimedia",
+          email: "silvina.mendez@colegio.edu.ar",
+          evaluationCriteria: [
+            "Producción escrita y ortografía: 45%",
+            "Control de lectura mensual: 35%",
+            "Trabajo en equipo y taller de escritura: 20%"
+          ],
+          assignmentRules: [
+            "Uso obligatorio de mayúsculas y tildación cuidada.",
+            "Los borradores previos deben adjuntarse a la versión final."
+          ],
+          recentUpdate: "Lectura obligatoria del mes: 'El túnel' de Ernesto Sabato."
+        }
+      ],
+
+      schoolFaqs: [
+        {
+          id: "sch-1",
+          category: "Asistencias y Faltas",
+          question: "¿Cuántas inasistencias permitidas hay en el ciclo lectivo?",
+          answer: "El máximo regular es de 20 inasistencias en el año. Al llegar a las 15 faltas se notifica formalmente a los adultos responsables. Si se superan las 20, se puede solicitar una reincorporación extraordinaria de hasta 5 faltas más mediante certificado médico o laboral justificado ante Rectoría."
+        },
+        {
+          id: "sch-2",
+          category: "Certificados y Trámites",
+          question: "¿Cómo y con cuánta anticipación solicito la Constancia de Alumno Regular?",
+          answer: "Podés pedirla de lunes a viernes en Secretaría Escolar (o por correo a secretaria@colegio.edu.ar indicando DNI y curso). La entrega se realiza en 48 horas hábiles sellada por las autoridades."
+        },
+        {
+          id: "sch-3",
+          category: "Reglamento y Convivencia",
+          question: "¿Cuál es el protocolo respecto al uso de teléfonos celulares en clase?",
+          answer: "El uso de teléfonos móviles durante las horas de clase está restringido exclusivamente a propósitos pedagógicos autorizados por el docente a cargo. Durante exámenes no se permite su tenencia en el banco de trabajo."
+        },
+        {
+          id: "sch-4",
+          category: "Asistencias y Faltas",
+          question: "¿Cómo se justifican las faltas por motivos médicos o deportivos?",
+          answer: "El certificado original firmado por profesional médico o club federado debe presentarse en Preceptoría dentro de las 48 horas de producido el reintegro a clases."
+        }
+      ],
+
+      contacts: [
+        {
+          id: "c-1",
+          department: "Rectoría y Vicedirección",
+          role: "Equipo de Conducción Institucional",
+          personInCharge: "Prof. Lic. Marcelo Domínguez",
+          office: "Dirección - Planta Baja",
+          phone: "+54 11 4780-1200",
+          email: "rectoria@colegio.edu.ar",
+          schedule: "Lunes a Viernes de 08:00 a 16:00 hs"
+        },
+        {
+          id: "c-2",
+          department: "Secretaría Académica y Títulos",
+          role: "Gestión de Trámites y Certificados",
+          personInCharge: "Sra. Patricia Gómez",
+          office: "Secretaría - Planta Baja (Ala Este)",
+          phone: "+54 11 4780-1201",
+          email: "secretaria@colegio.edu.ar",
+          schedule: "Lunes a Viernes de 08:30 a 13:00 hs"
+        },
+        {
+          id: "c-3",
+          department: "Gabinete de Orientación Escolar (GOE)",
+          role: "Acompañamiento Psicológico y Convivencia",
+          personInCharge: "Lic. Laura Benítez y Lic. Hernán Solís",
+          office: "1° Piso - Gabinete (junto a Biblioteca)",
+          phone: "+54 11 4780-1205",
+          email: "orientacion@colegio.edu.ar",
+          schedule: "Lunes a Viernes de 08:00 a 17:30 hs (Atención Privada)"
+        },
+        {
+          id: "c-4",
+          department: "Jefatura de Preceptores",
+          role: "Asistencias y Justificaciones",
+          personInCharge: "Preceptor Mayor Sergio Morales",
+          office: "Preceptoría General - Entrada Principal",
+          phone: "+54 11 4780-1202",
+          email: "preceptoria@colegio.edu.ar",
+          schedule: "Lunes a Viernes de 07:30 a 18:00 hs"
+        }
+      ]
+    };
+
+    // UI RENDERERS
+    function switchTab(tabId) {
+      AppData.activeTab = tabId;
+
+      // Hide all views
+      const views = ['home', 'safe_space', 'library', 'teachers', 'faq_contact'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      // Show selected
+      const target = document.getElementById(`view-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update Desktop Nav styles
+      document.querySelectorAll('.nav-desktop-tab').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('border-brand-500', 'text-brand-600');
+          btn.classList.remove('border-transparent', 'text-slate-500');
+        } else {
+          btn.classList.remove('border-brand-500', 'text-brand-600');
+          btn.classList.add('border-transparent', 'text-slate-500');
+        }
+      });
+
+      // Update Mobile Nav styles
+      document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('text-brand-600', 'font-bold');
+          btn.classList.remove('text-slate-500');
+        } else {
+          btn.classList.remove('text-brand-600', 'font-bold');
+          btn.classList.add('text-slate-500');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // 1. HOME RENDER
+    function renderAnnouncements() {
+      const container = document.getElementById('announcements-container');
+      if (!container) return;
+      container.innerHTML = AppData.announcements.map(a => `
+        <div onclick="openAnnouncementModal('${a.id}')" class="cursor-pointer bg-white rounded-2xl border border-slate-200 p-5 hover:border-brand-300 hover:shadow-sm transition-all flex flex-col sm:flex-row justify-between gap-3">
+          <div class="space-y-1.5 flex-grow">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                a.category === 'Exámenes' ? 'bg-rose-100 text-rose-700' :
+                a.category === 'Solidaridad' ? 'bg-cyan-100 text-cyan-800' : 'bg-brand-100 text-brand-800'
+              }">${a.category}</span>
+              ${a.isImportant ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-50 text-rose-600 border border-rose-200">Prioritario</span>' : ''}
+              <span class="text-xs text-slate-400 font-medium">${a.date}</span>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm sm:text-base">${a.title}</h4>
+            <p class="text-xs text-slate-600 line-clamp-2">${a.summary}</p>
+          </div>
+          <div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 text-xs text-slate-400 shrink-0">
+            <span class="flex items-center space-x-1">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+              <span>${a.location}</span>
+            </span>
+            <span class="text-brand-600 font-semibold flex items-center space-x-1 mt-1 hover:underline">
+              <span>Leer más</span>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // 2. SAFE SPACE SUBTABS & RENDER
+    function setSafeSubTab(sub) {
+      AppData.activeSafeSubTab = sub;
+      ['protocol', 'esi', 'faq'].forEach(s => {
+        const el = document.getElementById(`safe-sub-${s}`);
+        const btn = document.getElementById(`btn-sub-${s}`);
+        if (el) el.classList.toggle('hidden', s !== sub);
+        if (btn) {
+          if (s === sub) {
+            btn.className = 'pb-3 text-sm font-semibold border-b-2 border-brand-500 text-brand-600 flex items-center space-x-2';
+          } else {
+            btn.className = 'pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center space-x-2';
+          }
+        }
+      });
+      lucide.createIcons();
+    }
+
+    function renderProtocolSteps() {
+      const container = document.getElementById('protocol-steps-container');
+      if (!container) return;
+      container.innerHTML = AppData.protocolSteps.map(step => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-brand-600 text-white font-black text-sm flex items-center justify-center shrink-0">
+              ${step.stepNumber}
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base">${step.title}</h4>
+              <p class="text-xs text-brand-600 font-semibold">${step.subtitle}</p>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${step.description}</p>
+          
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-1.5">
+            <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Puntos clave de acción:</div>
+            ${step.keyActions.map(action => `
+              <div class="flex items-start space-x-2 text-xs text-slate-600">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5"></i>
+                <span>${action}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          ${step.warningNote ? `
+            <div class="bg-rose-50 border border-rose-200 text-rose-800 p-2.5 rounded-xl text-xs flex items-center space-x-2">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+              <span>${step.warningNote}</span>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderEsi() {
+      const container = document.getElementById('esi-container');
+      if (!container) return;
+      container.innerHTML = AppData.esiTopics.map(topic => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
+              <i data-lucide="heart" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base">${topic.title}</h4>
+              <p class="text-xs font-semibold text-cyan-700">${topic.subtitle}</p>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${topic.summary}</p>
+          
+          <div class="space-y-1.5 pl-2 border-l-2 border-cyan-400">
+            ${topic.keyPoints.map(point => `
+              <p class="text-xs text-slate-600">• ${point}</p>
+            `).join('')}
+          </div>
+
+          <div class="text-[11px] font-semibold text-slate-400">
+            Marco legal: <span class="text-slate-600">${topic.legalReference}</span>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderSafeFaq() {
+      const search = (document.getElementById('safe-faq-search')?.value || '').toLowerCase();
+      const tagsContainer = document.getElementById('safe-faq-tags');
+      const allTags = ['#Derechos', '#Acoso', '#SaludMental', '#Convivencia', '#ESI'];
+
+      if (tagsContainer && tagsContainer.children.length === 0) {
+        tagsContainer.innerHTML = `
+          <button onclick="filterSafeTag(null)" class="px-3 py-1 rounded-full text-xs font-semibold ${AppData.selectedSafeFaqTag === null ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600'}">Todos</button>
+          ${allTags.map(t => `
+            <button onclick="filterSafeTag('${t}')" class="px-3 py-1 rounded-full text-xs font-semibold ${AppData.selectedSafeFaqTag === t ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600'}">${t}</button>
+          `).join('')}
+        `;
+      }
+
+      const filtered = AppData.safeSpaceFaqs.filter(faq => {
+        const matchSearch = faq.question.toLowerCase().includes(search) || faq.answer.toLowerCase().includes(search);
+        const matchTag = !AppData.selectedSafeFaqTag || faq.tags.includes(AppData.selectedSafeFaqTag);
+        return matchSearch && matchTag;
+      });
+
+      const container = document.getElementById('safe-faq-container');
+      if (!container) return;
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs">No se encontraron respuestas para este criterio.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(faq => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <h4 class="font-bold text-slate-900 text-sm">${faq.question}</h4>
+            <div class="flex space-x-1 shrink-0">
+              ${faq.tags.map(t => `<span class="text-[10px] font-semibold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md">${t}</span>`).join('')}
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${faq.answer}</p>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function filterSafeTag(tag) {
+      AppData.selectedSafeFaqTag = tag;
+      const tagsContainer = document.getElementById('safe-faq-tags');
+      if (tagsContainer) tagsContainer.innerHTML = '';
+      renderSafeFaq();
+    }
+
+    // 3. LIBRARY RENDER
+    function renderLibraryFilters() {
+      const years = ['Todos', '1° Año', '2° Año', '3° Año', '4° Año', '5° Año'];
+      const subjects = ['Todas', 'Matemática', 'Historia', 'Filosofía', 'Inglés', 'Biología', 'Física'];
+
+      const yearBox = document.getElementById('year-filters');
+      if (yearBox) {
+        yearBox.innerHTML = years.map(y => `
+          <button onclick="setYearFilter('${y}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold ${AppData.selectedYearFilter === y ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${y}</button>
+        `).join('');
+      }
+
+      const subjBox = document.getElementById('subject-filters');
+      if (subjBox) {
+        subjBox.innerHTML = subjects.map(s => `
+          <button onclick="setSubjectFilter('${s}')" class="px-2.5 py-1 rounded-lg text-xs font-semibold ${AppData.selectedSubjectFilter === s ? 'bg-cyan-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${s}</button>
+        `).join('');
+      }
+    }
+
+    function setYearFilter(y) {
+      AppData.selectedYearFilter = y;
+      renderLibraryFilters();
+      renderLibrary();
+    }
+
+    function setSubjectFilter(s) {
+      AppData.selectedSubjectFilter = s;
+      renderLibraryFilters();
+      renderLibrary();
+    }
+
+    function renderLibrary() {
+      const search = (document.getElementById('library-search')?.value || '').toLowerCase();
+      const filtered = AppData.resources.filter(r => {
+        const matchSearch = r.title.toLowerCase().includes(search) || r.description.toLowerCase().includes(search) || r.contributor.toLowerCase().includes(search);
+        const matchYear = AppData.selectedYearFilter === 'Todos' || r.gradeYear === AppData.selectedYearFilter;
+        const matchSubject = AppData.selectedSubjectFilter === 'Todas' || r.subject === AppData.selectedSubjectFilter;
+        return matchSearch && matchYear && matchSubject;
+      });
+
+      const container = document.getElementById('resources-container');
+      if (!container) return;
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-2">
+            <i data-lucide="folder-open" class="w-8 h-8 text-slate-400 mx-auto"></i>
+            <p class="text-sm font-semibold text-slate-700">No se encontraron materiales para estos filtros.</p>
+            <p class="text-xs text-slate-400">¿Tenés apuntes? Sé el primero en compartirlos haciendo clic en "Subir Apunte".</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = filtered.map(r => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-slate-300 transition-all space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-xl ${r.fileType === 'PDF' ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-sky-50 text-brand-600 border border-sky-200'} flex flex-col items-center justify-center shrink-0">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+                <span class="text-[9px] font-black">${r.fileType}</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">${r.title}</h4>
+                <div class="flex items-center space-x-2 text-xs text-slate-500 font-medium mt-0.5">
+                  <span class="text-brand-600 font-semibold">${r.subject}</span>
+                  <span>•</span>
+                  <span>${r.gradeYear}</span>
+                  <span>•</span>
+                  <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px]">${r.resourceType}</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="toggleFavorite('${r.id}')" class="p-2 rounded-xl hover:bg-slate-100 transition ${r.isFavorite ? 'text-amber-500' : 'text-slate-300'}">
+              <i data-lucide="bookmark" class="w-5 h-5 fill-current"></i>
+            </button>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${r.description}</p>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
+            <div class="flex items-center space-x-3 text-slate-500">
+              <div class="flex items-center space-x-1 text-amber-500 font-bold">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                <span>${r.rating.toFixed(1)}</span>
+                <span class="text-slate-400 font-normal">(${r.ratingCount})</span>
+              </div>
+              <span>Por ${r.contributor}</span>
+              <span>•</span>
+              <span>${r.fileSize}</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <button onclick="rateResource('${r.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold flex items-center space-x-1">
+                <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                <span>Calificar</span>
+              </button>
+              <button onclick="downloadResource('${r.id}', '${r.title}', '${r.fileType}')" class="px-3.5 py-1.5 rounded-lg bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold text-xs flex items-center space-x-1.5 transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Abrir / Descargar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function toggleFavorite(id) {
+      const res = AppData.resources.find(r => r.id === id);
+      if (res) {
+        res.isFavorite = !res.isFavorite;
+        showToast(res.isFavorite ? 'Guardado en favoritos' : 'Eliminado de favoritos');
+        renderLibrary();
+      }
+    }
+
+    function rateResource(id) {
+      const res = AppData.resources.find(r => r.id === id);
+      if (res) {
+        res.ratingCount += 1;
+        res.rating = Math.min(5.0, res.rating + 0.1);
+        showToast(`¡Gracias por calificar con 5 estrellas!`);
+        renderLibrary();
+      }
+    }
+
+    function downloadResource(id, title, type) {
+      showToast(`Descargando "${title}.${type.toLowerCase()}"...`);
+    }
+
+    // 4. TEACHERS RENDER
+    function renderTeacherSubjectFilters() {
+      const subjects = ['Todas', 'Matemática', 'Historia', 'Filosofía', 'Lengua y Literatura', 'Física'];
+      const box = document.getElementById('teacher-subject-filters');
+      if (box) {
+        box.innerHTML = subjects.map(s => `
+          <button onclick="setTeacherSubjFilter('${s}')" class="px-3 py-1 rounded-lg font-semibold ${AppData.selectedTeacherSubjFilter === s ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${s}</button>
+        `).join('');
+      }
+    }
+
+    function setTeacherSubjFilter(s) {
+      AppData.selectedTeacherSubjFilter = s;
+      renderTeacherSubjectFilters();
+      renderTeachers();
+    }
+
+    function renderTeachers() {
+      const search = (document.getElementById('teacher-search')?.value || '').toLowerCase();
+      const filtered = AppData.teachers.filter(t => {
+        const matchSearch = t.name.toLowerCase().includes(search) || t.subjects.some(s => s.toLowerCase().includes(search)) || t.courses.toLowerCase().includes(search);
+        const matchSubj = AppData.selectedTeacherSubjFilter === 'Todas' || t.subjects.includes(AppData.selectedTeacherSubjFilter);
+        return matchSearch && matchSubj;
+      });
+
+      const container = document.getElementById('teachers-container');
+      if (!container) return;
+      container.innerHTML = filtered.map(t => {
+        const initials = t.name.split(' ').map(n => n[0]).filter(Boolean).slice(1, 3).join('');
+        return `
+          <div onclick="openTeacherModal('${t.id}')" class="cursor-pointer bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-brand-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+            <div class="flex items-start space-x-3.5">
+              <div class="w-12 h-12 rounded-full bg-brand-50 border border-brand-200 text-brand-700 font-black text-sm flex items-center justify-center shrink-0">
+                ${initials || 'PR'}
+              </div>
+              <div class="flex-grow">
+                <h4 class="font-bold text-slate-900 text-base leading-tight">${t.name}</h4>
+                <p class="text-xs text-slate-500 font-medium">${t.title}</p>
+                <div class="flex flex-wrap gap-1 mt-2">
+                  ${t.subjects.map(s => `<span class="bg-cyan-50 text-cyan-800 text-[10px] font-bold px-2 py-0.5 rounded-md">${s}</span>`).join('')}
+                </div>
+              </div>
+              <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 shrink-0"></i>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
+              <div class="flex items-center space-x-1.5 text-brand-700 font-semibold">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                <span>Consulta: ${t.consultationHours}</span>
+              </div>
+              <p class="text-[11px] text-slate-500">Cursos: ${t.courses}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // 5. FAQ & CONTACTS RENDER
+    function setFaqContactSubTab(sub) {
+      AppData.activeFaqContactSubTab = sub;
+      const faqEl = document.getElementById('sub-school-faqs');
+      const contactEl = document.getElementById('sub-school-contacts');
+      const btnFaq = document.getElementById('btn-sub-school-faq');
+      const btnContact = document.getElementById('btn-sub-school-contacts');
+
+      if (faqEl && contactEl && btnFaq && btnContact) {
+        if (sub === 'faqs') {
+          faqEl.classList.remove('hidden');
+          contactEl.classList.add('hidden');
+          btnFaq.className = 'pb-3 text-sm font-semibold border-b-2 border-brand-500 text-brand-600';
+          btnContact.className = 'pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800';
+        } else {
+          faqEl.classList.add('hidden');
+          contactEl.classList.remove('hidden');
+          btnFaq.className = 'pb-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800';
+          btnContact.className = 'pb-3 text-sm font-semibold border-b-2 border-brand-500 text-brand-600';
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function renderSchoolFaq() {
+      const search = (document.getElementById('school-faq-search')?.value || '').toLowerCase();
+      const categories = ['Todos', 'Asistencias y Faltas', 'Certificados y Trámites', 'Reglamento y Convivencia'];
+      const catBox = document.getElementById('school-faq-categories');
+      if (catBox && catBox.children.length === 0) {
+        catBox.innerHTML = categories.map(c => `
+          <button onclick="setSchoolFaqCat('${c}')" class="px-2.5 py-1 rounded-lg font-semibold ${AppData.selectedSchoolFaqCat === c ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${c}</button>
+        `).join('');
+      }
+
+      const filtered = AppData.schoolFaqs.filter(f => {
+        const matchSearch = f.question.toLowerCase().includes(search) || f.answer.toLowerCase().includes(search);
+        const matchCat = AppData.selectedSchoolFaqCat === 'Todos' || f.category === AppData.selectedSchoolFaqCat;
+        return matchSearch && matchCat;
+      });
+
+      const container = document.getElementById('school-faq-container');
+      if (!container) return;
+      container.innerHTML = filtered.map(f => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <h4 class="font-bold text-slate-900 text-sm sm:text-base">${f.question}</h4>
+            <span class="text-[10px] font-bold text-cyan-800 bg-cyan-50 px-2 py-0.5 rounded shrink-0">${f.category}</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${f.answer}</p>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function setSchoolFaqCat(cat) {
+      AppData.selectedSchoolFaqCat = cat;
+      const catBox = document.getElementById('school-faq-categories');
+      if (catBox) catBox.innerHTML = '';
+      renderSchoolFaq();
+    }
+
+    function renderContacts() {
+      const container = document.getElementById('contacts-container');
+      if (!container) return;
+      container.innerHTML = AppData.contacts.map(c => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+              <i data-lucide="building" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base">${c.department}</h4>
+              <p class="text-xs text-brand-600 font-semibold">${c.role}</p>
+            </div>
+          </div>
+          <div class="text-xs text-slate-600 space-y-1">
+            <p><strong>A cargo:</strong> ${c.personInCharge}</p>
+            <p><strong>Lugar:</strong> ${c.office}</p>
+            <p><strong>Horarios:</strong> ${c.schedule}</p>
+          </div>
+          <div class="flex items-center space-x-2 pt-2 border-t border-slate-100 text-xs">
+            <a href="tel:${c.phone}" class="flex-1 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold flex items-center justify-center space-x-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+              <span>Llamar</span>
+            </a>
+            <a href="mailto:${c.email}?subject=Consulta%20Aula%20Conectada" class="flex-1 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold flex items-center justify-center space-x-1">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+              <span>Escribir</span>
+            </a>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // MODAL HELPERS
+    function openModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) el.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) el.classList.add('hidden');
+    }
+
+    function openAnnouncementModal(id) {
+      const a = AppData.announcements.find(x => x.id === id);
+      if (!a) return;
+      document.getElementById('amodal-badge').textContent = a.category;
+      document.getElementById('amodal-date').textContent = a.date;
+      document.getElementById('amodal-title').textContent = a.title;
+      document.getElementById('amodal-details').textContent = a.fullDetails;
+      document.getElementById('amodal-location').textContent = a.location;
+      document.getElementById('amodal-organizer').textContent = `Organiza: ${a.organizer}`;
+      openModal('announcementModal');
+    }
+
+    function openTeacherModal(id) {
+      const t = AppData.teachers.find(x => x.id === id);
+      if (!t) return;
+      const initials = t.name.split(' ').map(n => n[0]).filter(Boolean).slice(1, 3).join('');
+      document.getElementById('tmodal-avatar').textContent = initials || 'PR';
+      document.getElementById('tmodal-name').textContent = t.name;
+      document.getElementById('tmodal-courses').textContent = `${t.courses} • ${t.title}`;
+      document.getElementById('tmodal-hours').textContent = t.consultationHours;
+      document.getElementById('tmodal-classroom').textContent = `Lugar: ${t.classroom}`;
+      document.getElementById('tmodal-criteria').innerHTML = t.evaluationCriteria.map(c => `<li>${c}</li>`).join('');
+      document.getElementById('tmodal-rules').innerHTML = t.assignmentRules.map(r => `<li>${r}</li>`).join('');
+      document.getElementById('tmodal-update').textContent = t.recentUpdate;
+      document.getElementById('tmodal-email-btn').href = `mailto:${t.email}?subject=Consulta%20Cátedra%20-%20Aula%20Conectada`;
+      openModal('teacherModal');
+    }
+
+    function toggleContactInput() {
+      const isAnon = document.getElementById('report-anonymous').checked;
+      document.getElementById('contact-info-field').classList.toggle('hidden', isAnon);
+    }
+
+    function submitConfidentialReport() {
+      const msg = document.getElementById('report-message').value.trim();
+      if (!msg) {
+        alert('Por favor describí brevemente la situación.');
+        return;
+      }
+      closeModal('reportModal');
+      document.getElementById('report-message').value = '';
+      showToast('Reporte confidencial enviado al Gabinete de Orientación.');
+    }
+
+    function randomizeFilename() {
+      const files = ['apuntes_trigonometria_completo.pdf', 'modelo_parcial_historia_fuentes.docx', 'guia_ejercicios_filosofia.pdf', 'resumen_biologia_celular.pdf'];
+      const current = document.getElementById('upload-filename').textContent;
+      const next = files.find(f => f !== current) || files[0];
+      document.getElementById('upload-filename').textContent = next;
+    }
+
+    function submitUploadResource() {
+      const title = document.getElementById('upload-title').value.trim();
+      if (!title) {
+        alert('Por favor ingresá un título para el apunte.');
+        return;
+      }
+      const subj = document.getElementById('upload-subject').value;
+      const year = document.getElementById('upload-year').value;
+      const type = document.getElementById('upload-type').value;
+      const desc = document.getElementById('upload-desc').value.trim() || 'Material compartido por estudiantes.';
+
+      const newRes = {
+        id: `res-${Date.now()}`,
+        title: title,
+        subject: subj,
+        gradeYear: year,
+        resourceType: type,
+        description: desc,
+        contributor: 'Camila Torres (4° B)',
+        uploadDate: 'Hoy',
+        fileType: 'PDF',
+        fileSize: '2.1 MB',
+        rating: 5.0,
+        ratingCount: 1,
+        isFavorite: true
+      };
+
+      AppData.resources.unshift(newRes);
+      closeModal('uploadResourceModal');
+      document.getElementById('upload-title').value = '';
+      document.getElementById('upload-desc').value = '';
+      showToast(`¡Tu apunte "${title}" fue publicado en la biblioteca!`);
+      renderLibrary();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      if (!toast || !toastText) return;
+      toastText.textContent = message;
+      toast.classList.remove('translate-y-[-100px]', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-100px]', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3200);
+    }
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAnnouncements();
+      renderProtocolSteps();
+      renderEsi();
+      renderSafeFaq();
+      renderLibraryFilters();
+      renderLibrary();
+      renderTeacherSubjectFilters();
+      renderTeachers();
+      renderSchoolFaq();
+      renderContacts();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
