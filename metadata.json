@@ -1,0 +1,7 @@
+{
+  "name": "Aula Conectada",
+  "description": "Aplicación comunitaria de secundaria para convivencia escolar, biblioteca digital de apuntes, espacio seguro y profesores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
