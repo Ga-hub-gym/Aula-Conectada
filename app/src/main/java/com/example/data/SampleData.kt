@@ -30,10 +30,10 @@ object SampleData {
     Announcement(
       id = "ann-3",
       title = "Feria Anual de Ciencias y Proyectos Tecnológicos 2026",
-      date = "28 Septiembre 2026",
+      date = "18 de Septiembre de 2026",
       category = "Eventos",
       summary = "Exposición de trabajos prácticos integradores de 1° a 5° año. Muestras interactivas y robótica.",
-      fullDetails = "Invitamos a toda la comunidad educativa y familias a recorrer los stands preparados por los cursos de ciencias naturales y tecnología. Habrá experimentos en vivo, paneles de debate y presentaciones de podcasts estudiantiles.",
+      fullDetails = "Invitamos a toda la comunidad educativa y familias a recorrer los stands preparados por los cursos de ciencias naturales y tecnología en el Instituto Dr. Dalmacio Velez Sarsfield. Habrá experimentos en vivo, paneles de debate y presentaciones de podcasts estudiantiles.",
       location = "Gimnasio y Laboratorio Central",
       organizer = "Departamento de Ciencias Exactas y Naturales",
       isImportant = true
@@ -298,13 +298,13 @@ object SampleData {
   val teachers = listOf(
     Teacher(
       id = "t-1",
-      name = "Prof. Mariana Gómez",
-      title = "Licenciada en Matemática y Profesora de Enseñanza Secundaria",
+      name = "Prof. Natalia Posse",
+      title = "Profesora de Matemática y Geometría",
       subjects = listOf("Matemática 3° A", "Matemática 4° B"),
-      courses = "3° Año A (Turno Mañana) y 4° Año B (Turno Tarde)",
-      email = "mariana.gomez@aulaconectada.edu.ar",
-      consultationHours = "Martes de 14:30 a 16:00 hs y Jueves de 10:15 a 11:30 hs",
-      classroom = "Aula 12 (Pabellón Central)",
+      courses = "3° Año A y 4° Año B (Turno Mañana)",
+      email = "natalia.posse@velezsarsfield.edu.ar",
+      consultationHours = "De Lunes a Viernes, de 07:45 a 12:45 hs",
+      classroom = "Aula 12 / Sala de Profesores",
       evaluationCriteria = listOf(
         "2 Evaluaciones escritas individuales por trimestre (promediables).",
         "Trabajos Prácticos grupales con defensa oral (se evalúa proceso y fundamentación).",
@@ -317,17 +317,17 @@ object SampleData {
         "Los ejercicios deben incluir todo el desarrollo algebraico manuscrito; no se convalidan resultados aislados.",
         "Trabajos entregados fuera de término sufren un descuento de 1 punto por día hábil de demora."
       ),
-      recentUpdate = "Guía Práctica N° 4 subida a la plataforma. La fecha límite de entrega del TP sobre Parábolas se extendió al viernes 3 de octubre."
+      recentUpdate = ""
     ),
     Teacher(
       id = "t-2",
-      name = "Prof. Carlos Benítez",
-      title = "Profesor en Historia y Ciencias Sociales",
+      name = "Prof. Andrea Picardi",
+      title = "Profesora de Historia y Ciencias Sociales",
       subjects = listOf("Historia Argentina y Mundial 4° B", "Geografía 2° A"),
       courses = "4° Año División B y 2° Año División A",
-      email = "carlos.benitez@aulaconectada.edu.ar",
-      consultationHours = "Lunes de 11:30 a 12:45 hs y Miércoles de 15:00 a 16:15 hs",
-      classroom = "Sala de Profesores / Aula 8",
+      email = "andrea.picardi@velezsarsfield.edu.ar",
+      consultationHours = "De Lunes a Jueves, de 07:45 a 13:00 hs",
+      classroom = "Aula 8 / Sala de Profesores",
       evaluationCriteria = listOf(
         "Análisis crítico de fuentes históricas primarias y secundarias.",
         "Uso correcto de vocabulario disciplinar y contextualización temporal y espacial.",
@@ -339,38 +339,38 @@ object SampleData {
         "Prohibido el copiado textual sin citar fuentes o uso desleal de herramientas de IA sin reflexión propia.",
         "Entrega en hoja A4, tipografía legible o manuscrito con tinta azul/negra."
       ),
-      recentUpdate = "El debate sobre las consecuencias socioeconómicas del período de entreguerras se realizará la próxima clase. Repasar capítulos 5 y 6."
+      recentUpdate = ""
     ),
     Teacher(
       id = "t-3",
-      name = "Prof. Lucía Ferraro",
-      title = "Licenciada en Letras Modernas",
+      name = "Prof. Romina Diaz",
+      title = "Licenciada en Letras, Docente de Lengua y Literatura",
       subjects = listOf("Lengua y Literatura 4° B", "Literatura 5° A"),
       courses = "4° Año División B y 5° Año División A",
-      email = "lucia.ferraro@aulaconectada.edu.ar",
-      consultationHours = "Miércoles de 09:30 a 10:45 hs y Viernes de 13:30 a 14:30 hs",
-      classroom = "Biblioteca Escolar (Sector Silencioso)",
+      email = "romina.diaz@velezsarsfield.edu.ar",
+      consultationHours = "De Lunes a Viernes, de 08:00 a 13:15 hs",
+      classroom = "Biblioteca Institucional / Sector de Lectura",
       evaluationCriteria = listOf(
         "Comprensión lectora, coherencia y cohesión en la producción textual.",
         "Ortografía, acentuación y puntuación adecuada (se descuenta puntaje por errores reiterados).",
-        "Lectura obligatoria de las 3 novelas trimestrales y control de lectura individual."
+        "Lectura obligatoria de las novelas trimestrales y control de lectura individual."
       ),
       assignmentRules = listOf(
         "Los ensayos deben incluir título original y epígrafe introductorio.",
         "Extensión mínima: 2 carillas; extensión máxima: 4 carillas.",
         "Las entregas se realizan puntualmente al inicio de la hora de clase pautada."
       ),
-      recentUpdate = "Disponibles en fotocopiadora los cuadernillos de microrrelatos latinoamericanos para el proyecto intercolegial."
+      recentUpdate = ""
     ),
     Teacher(
       id = "t-4",
-      name = "Prof. Esteban Morales",
-      title = "Licenciado en Filosofía y Ciencias de la Educación",
+      name = "Prof. Marta Vozzi",
+      title = "Profesora de Filosofía y Formación Ética",
       subjects = listOf("Filosofía 5° A y B", "Construcción de Ciudadanía 3° C"),
       courses = "5° Año y 3° Año Turno Mañana",
-      email = "esteban.morales@aulaconectada.edu.ar",
-      consultationHours = "Viernes de 10:00 a 12:00 hs",
-      classroom = "Aula Magna",
+      email = "marta.vozzi@velezsarsfield.edu.ar",
+      consultationHours = "Martes, Miércoles y Viernes, de 07:45 a 12:45 hs",
+      classroom = "Aula Magna / Aula 6",
       evaluationCriteria = listOf(
         "Capacidad de argumentación dialéctica y problematización de conceptos.",
         "Rigor en la lectura de textos filosóficos y elaboración de bitácoras de pensamiento.",
@@ -380,17 +380,17 @@ object SampleData {
         "Ensayos libres con defensa oral obligatoria en pequeños grupos.",
         "Valoración especial a la formulación de preguntas filosóficas originales antes que a respuestas mecánicas."
       ),
-      recentUpdate = "Publicado el cronograma para las exposiciones orales sobre el dilema ético contemporáneo de la inteligencia artificial."
+      recentUpdate = ""
     ),
     Teacher(
       id = "t-5",
-      name = "Prof. Sofía Valenzuela",
-      title = "Traductora Pública y Profesora en Lengua Inglesa",
+      name = "Prof. Susan García",
+      title = "Profesora de Lengua Inglesa",
       subjects = listOf("Inglés General 3° B", "Inglés 4° B"),
       courses = "3° Año B y 4° Año B",
-      email = "sofia.valenzuela@aulaconectada.edu.ar",
-      consultationHours = "Jueves de 08:00 a 09:30 hs",
-      classroom = "Laboratorio de Idiomas",
+      email = "susan.garcia@velezsarsfield.edu.ar",
+      consultationHours = "De Lunes a Viernes, de 07:45 a 12:45 hs",
+      classroom = "Laboratorio de Idiomas / Aula 5",
       evaluationCriteria = listOf(
         "Evaluación de las 4 macrohabilidades: Reading, Writing, Listening & Speaking.",
         "Ejercicios prácticos semanales en plataforma interactiva.",
@@ -400,7 +400,7 @@ object SampleData {
         "Uso exclusivo del idioma inglés durante la presentación oral.",
         "Corrección colaborativa de borradores de redacción antes de la entrega final."
       ),
-      recentUpdate = "El test de listening de la Unidad 3 se tomará este jueves a primera hora. Recordar traer auriculares propios para el laboratorio."
+      recentUpdate = ""
     )
   )
 
@@ -448,51 +448,41 @@ object SampleData {
       id = "c-1",
       department = "Rectoría y Equipo Directivo",
       role = "Dirección Institucional",
-      personInCharge = "Prof. Lic. Marcelo Argañaraz",
+      personInCharge = "Prof. Diego Martos",
       phone = "(011) 4582-9011",
-      email = "rectoria@aulaconectada.edu.ar",
+      email = "rectoria@velezsarsfield.edu.ar",
       office = "Planta Baja - Ala Este",
-      schedule = "Lunes a Viernes de 08:00 a 17:00 hs"
+      schedule = "Lunes a Viernes de 07:45 a 16:30 hs"
     ),
     InstitutionalContact(
       id = "c-2",
       department = "Secretaría de Alumnos",
       role = "Trámites, Títulos y Matrículas",
-      personInCharge = "Sra. Andrea Quiroga",
+      personInCharge = "Sra. Gabriela Terenzani",
       phone = "(011) 4582-9012 int. 104",
-      email = "secretaria@aulaconectada.edu.ar",
+      email = "secretaria@velezsarsfield.edu.ar",
       office = "Entrada Principal - Ventanilla 1",
-      schedule = "Turno Mañana: 08:30 a 12:00 hs | Turno Tarde: 13:30 a 17:00 hs"
+      schedule = "Turno Mañana: 07:45 a 12:30 hs | Turno Tarde: 13:30 a 17:00 hs"
     ),
     InstitutionalContact(
       id = "c-3",
       department = "Gabinete de Orientación Escolar",
       role = "Acompañamiento Psicopedagógico y ESI",
-      personInCharge = "Lic. Laura Rossi & Lic. Natalia Méndez",
+      personInCharge = "Lic. Soledad Fuster",
       phone = "(011) 4582-9013",
-      email = "gabinete.orientacion@aulaconectada.edu.ar",
+      email = "orientacion@velezsarsfield.edu.ar",
       office = "1° Piso - Gabinete Silencioso (Junto a Biblioteca)",
-      schedule = "Lunes a Viernes de 08:00 a 18:00 hs"
+      schedule = "Lunes a Viernes de 08:00 a 17:00 hs"
     ),
     InstitutionalContact(
       id = "c-4",
       department = "Preceptoría General",
-      role = "Control de Asistencia y Libretas",
-      personInCharge = "Preceptor Jefe: Gustavo Morales",
+      role = "Control de Asistencia y Régimen Escolar",
+      personInCharge = "Pablo Fiumara (Preceptor Jefe)",
       phone = "(011) 4582-9014 int. 108",
-      email = "preceptoria@aulaconectada.edu.ar",
+      email = "preceptoria@velezsarsfield.edu.ar",
       office = "Planta Baja - Galería Central",
       schedule = "Turno Mañana: 07:15 a 13:00 hs | Turno Tarde: 12:45 a 18:30 hs"
-    ),
-    InstitutionalContact(
-      id = "c-5",
-      department = "Centro de Estudiantes (C.E.)",
-      role = "Representación Gremial Estudiantil",
-      personInCharge = "Presidenta C.E.: Candela Bravo (5° A)",
-      phone = "(011) 15-6892-3341",
-      email = "centro.estudiantes@aulaconectada.edu.ar",
-      office = "Subsuelo - Sala de Estudiantes",
-      schedule = "Abierto durante todos los recreos y contraturnos"
     )
   )
 }

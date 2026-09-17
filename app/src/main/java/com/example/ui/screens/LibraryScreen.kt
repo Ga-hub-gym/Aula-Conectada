@@ -495,7 +495,7 @@ fun UploadResourceDialog(
 
   val subjectsList = listOf("Matemática", "Historia", "Filosofía", "Inglés", "Biología", "Lengua y Literatura", "Física")
   val yearsList = listOf("1° Año", "2° Año", "3° Año", "4° Año", "5° Año")
-  val typesList = listOf("Resumen", "Modelo de Examen", "Guía de Ejercicios", "Apuntes")
+  val typesList = listOf("Resumen", "Modelo de Examen", "Guía de Ejercicios", "Apuntes", "Cuadernillo")
 
   AlertDialog(
     onDismissRequest = onDismiss,
@@ -613,8 +613,8 @@ fun UploadResourceDialog(
             )
           )
           Spacer(modifier = Modifier.height(4.dp))
-          Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            typesList.forEach { tp ->
+          LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            items(typesList) { tp ->
               FilterChip(
                 selected = resourceType == tp,
                 onClick = { resourceType = tp },

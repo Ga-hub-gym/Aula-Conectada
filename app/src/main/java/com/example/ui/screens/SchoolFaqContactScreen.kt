@@ -196,7 +196,7 @@ fun SchoolFaqContactScreen(
               )
               Spacer(modifier = Modifier.width(10.dp))
               Text(
-                text = "Comunicate directamente con las áreas directivas, de orientación, preceptoría y centro de estudiantes.",
+                text = "Comunicate directamente con las áreas directivas, de orientación escolar, secretaría y preceptoría.",
                 style = MaterialTheme.typography.bodySmall.copy(
                   color = OnSkyContainer,
                   lineHeight = 18.sp

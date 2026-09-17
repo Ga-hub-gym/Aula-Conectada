@@ -78,7 +78,7 @@ fun TeacherDirectoryScreen(
             )
           )
           Text(
-            text = "Materias, horarios de consulta, criterios y pautas de cursada",
+            text = "Materias, horarios en el colegio, criterios y pautas de cursada",
             style = MaterialTheme.typography.bodySmall.copy(color = TextMuted)
           )
         }
@@ -228,7 +228,7 @@ fun TeacherDirectoryScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-              text = "Consulta: ${teacher.consultationHours}",
+              text = "En el colegio: ${teacher.consultationHours}",
               style = MaterialTheme.typography.bodySmall.copy(
                 color = TextSecondary,
                 fontSize = 11.sp
@@ -325,7 +325,7 @@ fun TeacherDetailDialog(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                  text = "Horarios de Consulta",
+                  text = "Días y Horarios en el Colegio",
                   style = MaterialTheme.typography.labelMedium.copy(
                     fontWeight = FontWeight.Bold,
                     color = OnSkyContainer
@@ -341,7 +341,7 @@ fun TeacherDetailDialog(
                 )
               )
               Text(
-                text = "Lugar: ${teacher.classroom}",
+                text = "Lugar habitual: ${teacher.classroom}",
                 style = MaterialTheme.typography.bodySmall.copy(
                   color = OnSkyContainer,
                   fontSize = 11.sp
@@ -411,44 +411,6 @@ fun TeacherDetailDialog(
                 style = MaterialTheme.typography.bodySmall.copy(
                   color = TextSecondary,
                   lineHeight = 18.sp
-                )
-              )
-            }
-          }
-        }
-
-        // Course Update
-        item {
-          Surface(
-            shape = RoundedCornerShape(12.dp),
-            color = WarningAmberContainer.copy(alpha = 0.6f),
-            border = BorderStroke(1.dp, WarningAmber.copy(alpha = 0.4f)),
-            modifier = Modifier.fillMaxWidth()
-          ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-              Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                  imageVector = Icons.Default.Campaign,
-                  contentDescription = null,
-                  tint = WarningAmber,
-                  modifier = Modifier.size(18.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                  text = "Novedades de la Cátedra",
-                  style = MaterialTheme.typography.labelMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary
-                  )
-                )
-              }
-              Spacer(modifier = Modifier.height(4.dp))
-              Text(
-                text = teacher.recentUpdate,
-                style = MaterialTheme.typography.bodySmall.copy(
-                  color = TextSecondary,
-                  fontSize = 11.sp,
-                  lineHeight = 16.sp
                 )
               )
             }

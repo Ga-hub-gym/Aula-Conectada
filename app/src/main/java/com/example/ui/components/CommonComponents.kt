@@ -65,16 +65,18 @@ fun SchoolTopAppBar(
             text = "Aula Conectada",
             style = MaterialTheme.typography.titleLarge.copy(
               fontWeight = FontWeight.Bold,
-              fontSize = 20.sp,
+              fontSize = 19.sp,
               color = TextPrimary
             )
           )
           Text(
-            text = "Comunidad Secundaria Activa",
+            text = userProfile.schoolName,
             style = MaterialTheme.typography.bodySmall.copy(
               color = TextMuted,
-              fontSize = 12.sp
-            )
+              fontSize = 11.sp,
+              fontWeight = FontWeight.Medium
+            ),
+            maxLines = 1
           )
         }
       }

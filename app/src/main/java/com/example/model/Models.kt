@@ -110,6 +110,6 @@ data class UserProfile(
   val role: String = "Estudiante Secundaria",
   val gradeYear: String = "4° Año",
   val division: String = "División B",
-  val schoolName: String = "Escuela Normal Superior N° 1",
-  val studentId: String = "ENS-2026-4089"
+  val schoolName: String = "Instituto Dr. Dalmacio Velez Sarsfield",
+  val studentId: String = "IDVS-2026-4089"
 )
