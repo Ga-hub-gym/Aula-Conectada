@@ -6,6 +6,17 @@ object SampleData {
 
   val announcements = listOf(
     Announcement(
+      id = "ann-velezpalooza",
+      title = "Velezpalooza 2026",
+      date = "23 de octubre",
+      category = "Eventos",
+      summary = "Por primera vez en la historia del colegio, el mayor evento del año, lleno de musica, comida y feria.",
+      fullDetails = "Por primera vez en la historia del colegio, el mayor evento del año, lleno de musica, comida y feria. ¡Te esperamos para compartir una jornada inolvidable!",
+      location = "Patio Central, 6PM",
+      organizer = "Comunidad Educativa",
+      isImportant = true
+    ),
+    Announcement(
       id = "ann-1",
       title = "Cronograma de Mesas de Examen Previas y Libres - Octubre",
       date = "22 Septiembre 2026",
@@ -18,13 +29,13 @@ object SampleData {
     ),
     Announcement(
       id = "ann-2",
-      title = "Bufet Solidario del Centro de Estudiantes: Colecta de Invierno",
+      title = "Buffet Solidario Misiones: Colecta para las escuelas rurales",
       date = "25 Septiembre 2026",
       category = "Solidaridad",
-      summary = "Venta de meriendas caseras en el recreo largo. Lo recaudado se destinará a comedores comunitarios del barrio.",
-      fullDetails = "El Centro de Estudiantes invita a participar del Bufet Solidario. Habrá alfajores artesanales, tortas y opciones sin TACC. También recibiremos donaciones de frazadas y ropa de abrigo en buen estado en la mesa de entrada.",
+      summary = "Venta de meriendas y recaudación de fondos y donaciones para colaborar con las escuelas rurales de Misiones.",
+      fullDetails = "Invitamos a participar del Buffet Solidario Misiones. Todo lo recaudado y las donaciones recibidas serán destinadas a apoyar a escuelas rurales de la provincia de Misiones.",
       location = "Patio Central - Durante los recreos",
-      organizer = "Centro de Estudiantes (C.E.)",
+      organizer = "Comunidad Educativa",
       isImportant = false
     ),
     Announcement(
